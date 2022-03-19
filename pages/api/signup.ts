@@ -17,10 +17,10 @@ export default async (request: NextApiRequest, response: NextApiResponse) => {
     return response.status(401).json({ error: "User already exists" });
   }
 
-  const token: string = jwt.sign(
+  const token = jwt.sign(
     { email: user.email, id: user.id, time: Date.now() },
     "imran",
-    { expireIn: "8h" }
+    { expiresIn: "8h" }
   );
 
   response.setHeader(
