@@ -1,5 +1,11 @@
+import GradientLayout from "../components/GradientLayout";
+
 const Home = () => {
-  return <h1>Hello Imran</h1>;
+  return (
+    <GradientLayout color="green" roundImage>
+      Home Page
+    </GradientLayout>
+  );
 };
 
 export default Home;
