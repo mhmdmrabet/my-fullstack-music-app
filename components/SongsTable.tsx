@@ -10,6 +10,8 @@ import {
 } from "@chakra-ui/react";
 import { BsFillPlayFill } from "react-icons/bs";
 import { AiOutlineClockCircle } from "react-icons/ai";
+import formatDuration from "format-duration";
+import { formatDate } from "../lib/formatters";
 
 const SongsTable = ({ songs }) => {
   return (
@@ -35,6 +37,23 @@ const SongsTable = ({ songs }) => {
               </Th>
             </Tr>
           </Thead>
+          <Tbody>
+            {songs.map(({ id, name, createdAt, duration }, index) => (
+              <Tr
+                key={id}
+                sx={{
+                  transition: "all .3s",
+                  "&hover": { bg: "rgba(255,255,255,0.1)" },
+                }}
+                cursor="cursor"
+              >
+                <Td>{index + 1}</Td>
+                <Td>{name}</Td>
+                <Td>{formatDate(createdAt)}</Td>
+                <Td>{formatDuration(duration * 1000)}</Td>
+              </Tr>
+            ))}
+          </Tbody>
         </Table>
       </Box>
     </Box>
