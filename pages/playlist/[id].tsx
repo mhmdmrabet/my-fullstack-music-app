@@ -1,5 +1,6 @@
 import { Box } from "@chakra-ui/layout";
 import GradientLayout from "../../components/GradientLayout";
+import SongsTable from "../../components/SongsTable";
 import { validateToken } from "../../lib/auth";
 import prisma from "../../lib/prisma";
 
@@ -28,7 +29,7 @@ const Playlist = ({ playlist }) => {
       description={`${playlist.songs.length} songs`}
       image={`https://picsum.photos/400?random=${playlist.id}`}
     >
-      <Box>123</Box>
+      <SongsTable />
     </GradientLayout>
   );
 };
