@@ -14,6 +14,14 @@ import { useStoreActions } from "easy-peasy";
 import { formatDate, formatTime } from "../lib/formatters";
 
 const SongsTable = ({ songs }) => {
+  const playSongs = useStoreActions((store: any) => store.changeActiveSongs);
+  const setActiveSong = useStoreActions((store: any) => store.changeActiveSong);
+
+  const handlePlay = (activeSong?) => {
+    setActiveSong(activeSong || songs[0]);
+    playSongs(songs);
+  };
+
   return (
     <Box bg="transparent" color="white">
       <Box padding="10px" marginBottom="20px">
@@ -24,6 +32,7 @@ const SongsTable = ({ songs }) => {
             size="lg"
             isRound
             aria-label="play"
+            onClick={() => handlePlay()}
           />
         </Box>
         <Table variant="unstyled">
@@ -38,19 +47,20 @@ const SongsTable = ({ songs }) => {
             </Tr>
           </Thead>
           <Tbody>
-            {songs.map(({ id, name, createdAt, duration }, index) => (
+            {songs.map((song, index) => (
               <Tr
-                key={id}
+                key={song.id}
                 sx={{
                   transition: "all .3s",
                   "&hover": { bg: "rgba(255,255,255,0.1)" },
                 }}
                 cursor="cursor"
+                onClick={() => handlePlay(song)}
               >
                 <Td>{index + 1}</Td>
-                <Td>{name}</Td>
-                <Td>{formatDate(createdAt)}</Td>
-                <Td>{formatTime(duration)}</Td>
+                <Td>{song.name}</Td>
+                <Td>{formatDate(song.createdAt)}</Td>
+                <Td>{formatTime(song.duration)}</Td>
               </Tr>
             ))}
           </Tbody>

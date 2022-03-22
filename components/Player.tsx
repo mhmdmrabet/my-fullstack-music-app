@@ -20,7 +20,7 @@ import {
 } from "react-icons/md";
 
 const Player = ({ songs, activeSong }) => {
-  const [playing, setPlaying] = useState(true);
+  const [playing, setPlaying] = useState(false);
   const [index, setIndex] = useState(0);
   const [seek, setSeek] = useState(0.0);
   const [repeat, setRepeat] = useState(false);
@@ -40,7 +40,9 @@ const Player = ({ songs, activeSong }) => {
 
   return (
     <Box>
-      <Box>{/* <ReactHowler playing={playing} src={activeSong?.url} /> */}</Box>
+      <Box>
+        <ReactHowler playing={playing} src={activeSong?.url} />
+      </Box>
       <Center color="gray.600">
         <ButtonGroup>
           <IconButton
