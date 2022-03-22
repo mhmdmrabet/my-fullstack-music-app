@@ -8,7 +8,7 @@ import {
   RangeSliderThumb,
   RangeSliderTrack,
 } from "@chakra-ui/react";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import ReactHowler from "react-howler";
 import {
   MdOutlinePauseCircleFilled,
@@ -26,6 +26,7 @@ const Player = ({ songs, activeSong }) => {
   const [repeat, setRepeat] = useState(false);
   const [shuffle, setShuffle] = useState(false);
   const [duration, setDuration] = useState(0.0);
+  const soundRef = useRef(null);
 
   const setPlayState = (value) => {
     setPlaying(value);
@@ -37,11 +38,30 @@ const Player = ({ songs, activeSong }) => {
   const onRepeat = () => {
     setRepeat((state) => !state);
   };
+  const prevSong = () => {
+    setIndex((prevIndex) => {
+      return prevIndex ? prevIndex - 1 : songs.length - 1;
+    });
+  };
+  const nextSong = (): number | any => {
+    setIndex((prevIndex) => {
+      if (shuffle) {
+        const randomIndexInArrayOfSongs = Math.floor(
+          Math.random() * songs.length
+        );
+        if (randomIndexInArrayOfSongs === prevIndex) {
+          return nextSong();
+        }
+        return randomIndexInArrayOfSongs;
+      }
+      return prevIndex === songs.length - 1 ? 0 : prevIndex + 1;
+    });
+  };
 
   return (
     <Box>
       <Box>
-        <ReactHowler playing={playing} src={activeSong?.url} />
+        <ReactHowler playing={playing} src={activeSong?.url} ref={soundRef} />
       </Box>
       <Center color="gray.600">
         <ButtonGroup>
