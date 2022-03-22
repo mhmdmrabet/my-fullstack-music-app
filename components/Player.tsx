@@ -1,5 +1,13 @@
-import { Box, Center } from "@chakra-ui/layout";
-import { ButtonGroup, IconButton } from "@chakra-ui/react";
+/* eslint-disable jsx-a11y/aria-proptypes */
+import { Box, Center, Flex, Text } from "@chakra-ui/layout";
+import {
+  ButtonGroup,
+  IconButton,
+  RangeSlider,
+  RangeSliderFilledTrack,
+  RangeSliderThumb,
+  RangeSliderTrack,
+} from "@chakra-ui/react";
 import ReactHowler from "react-howler";
 import {
   MdOutlinePauseCircleFilled,
@@ -62,6 +70,30 @@ const Player = () => {
           />
         </ButtonGroup>
       </Center>
+      <Box color="gray.600">
+        <Flex justify="center" align="center">
+          <Box width="10%">
+            <Text fontSize="x-small">1:21</Text>
+          </Box>
+          <Box width="90%">
+            <RangeSlider
+              aria-label={["min", "max"]}
+              step={0.1}
+              min={0}
+              max={321}
+              id="player-range"
+            >
+              <RangeSliderTrack bg="gray.800">
+                <RangeSliderFilledTrack bg="gray.600" />
+              </RangeSliderTrack>
+              <RangeSliderThumb index={0} />
+            </RangeSlider>
+          </Box>
+          <Box width="10%" textAlign="right">
+            <Text fontSize="x-small">3:45</Text>
+          </Box>
+        </Flex>
+      </Box>
     </Box>
   );
 };
