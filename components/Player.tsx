@@ -8,6 +8,7 @@ import {
   RangeSliderThumb,
   RangeSliderTrack,
 } from "@chakra-ui/react";
+import { useStoreActions } from "easy-peasy";
 import { useEffect, useRef, useState } from "react";
 import ReactHowler from "react-howler";
 import {
@@ -22,13 +23,19 @@ import { formatTime } from "../lib/formatters";
 
 const Player = ({ songs, activeSong }) => {
   const [playing, setPlaying] = useState(false);
-  const [index, setIndex] = useState(0);
+  const [index, setIndex] = useState(
+    songs.findIndex((song) => song.id === activeSong.id)
+  );
   const [seek, setSeek] = useState(0.0);
   const [isSeeking, setIsSeeking] = useState(false);
   const [repeat, setRepeat] = useState(false);
   const [shuffle, setShuffle] = useState(false);
   const [duration, setDuration] = useState(0.0);
   const soundRef = useRef(null);
+  const repeatRef = useRef(repeat);
+  const changeActiveSong = useStoreActions(
+    (state: any) => state.changeActiveSong
+  );
 
   useEffect(() => {
     let timerId;
@@ -42,6 +49,14 @@ const Player = ({ songs, activeSong }) => {
     }
     cancelAnimationFrame(timerId);
   }, [playing, isSeeking]);
+
+  useEffect(() => {
+    changeActiveSong(songs[index]);
+  }, [index, changeActiveSong, songs]);
+
+  useEffect(() => {
+    repeatRef.current = repeat;
+  }, [repeat]);
 
   const setPlayState = (value) => {
     setPlaying(value);
@@ -74,7 +89,7 @@ const Player = ({ songs, activeSong }) => {
   };
 
   const onEnd = () => {
-    if (repeat) {
+    if (repeatRef.current) {
       setSeek(0);
       soundRef.current.seek(0);
     } else {
