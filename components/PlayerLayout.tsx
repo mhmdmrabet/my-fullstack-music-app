@@ -1,4 +1,5 @@
 import { Box } from "@chakra-ui/layout";
+import PLayerBar from "./PlayerBar";
 import SideBar from "./SideBar";
 
 const PlayerLayout = ({ children }) => {
@@ -11,7 +12,7 @@ const PlayerLayout = ({ children }) => {
         <Box height="calc(100vh - 100px)">{children}</Box>
       </Box>
       <Box position="absolute" bottom="0" left="0">
-        PLAYER
+        <PLayerBar />
       </Box>
     </Box>
   );
